@@ -1,0 +1,41 @@
+server {
+  listen 443 http2;
+  listen [::]:443 http2;
+  server_name {{ calibre_server_name }};
+
+  ssl on;
+  ssl_certificate {{ calibre_tls_cert_dir }}/{{ calibre_server_name }}/fullchain.pem;
+  ssl_certificate_key {{ calibre_tls_cert_dir }}/{{ calibre_server_name }}/privkey.pem;
+
+  access_log /var/log/nginx/{{ calibre_server_name }}.access.log;
+  autoindex off;
+
+  client_max_body_size 300M;
+
+  proxy_connect_timeout       600;
+  proxy_send_timeout          600;
+  proxy_read_timeout          600;
+  send_timeout                600;
+
+{% if calibre_auth_basic %}
+  auth_basic           "Authentication";
+  auth_basic_user_file {{ calibre_auth_basic_file_path }};
+{% endif %}
+
+  location / {
+    include uwsgi_params;
+    uwsgi_pass localhost:{{ calibre_docker_port }};
+  }
+
+  location {{ calibre_static_files_url_path }} {
+    alias {{ calibre_static_files_path }}/;
+  }
+
+{% if calibre_auth_basic %}
+  location /feeds {
+    auth_basic off;
+    include uwsgi_params;
+    uwsgi_pass localhost:{{ calibre_docker_port }};
+  }
+{% endif %}
+}
