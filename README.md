@@ -11,6 +11,20 @@ This role requires the target host to have docker installed.
 Role Variables
 --------------
 
+- `calibre_webui_repo`: Repository to clone calibre_webui from
+- `calibre_server_name`: Domain name hosting calibre_webui
+- `calibre_tls_cert_dir`: Directory storing the TLS keychain and private key
+- `calibre_auth_basic`: Enable basic authentication
+- `calibre_auth_basic_file_path`: Path to the basic authentication file
+- `calibre_docker_port`: Port to use for the docker container
+- `calibre_static_files_path`: Host directory to store and serve the static web files from
+- `calibre_static_files_url_path`: url path to the static folder on calibre_server_name
+- `calibre_flask_app_secret_key`: Flask app secret key
+- `calibre_container_build_tmpdir`: Location for repo cloning to build the container
+- `calibre_data_dir`: Host directory to mount on the container as calibre library parth
+- `calibre_memory_limit`: Memory limitation for the container
+- `calibre_user_uid`: UID for the calibre user in the docker container
+
 
 Example Playbook
 ----------------
