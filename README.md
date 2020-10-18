@@ -24,6 +24,7 @@ Role Variables
 - `calibre_data_dir`: Host directory to mount on the container as calibre library parth
 - `calibre_memory_limit`: Memory limitation for the container
 - `calibre_user_uid`: UID for the calibre user in the docker container
+- `calibre_preferred_format`: output ebook format to default to when converting
 
 
 Example Playbook

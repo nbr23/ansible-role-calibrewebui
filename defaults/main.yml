@@ -12,3 +12,4 @@ calibre_container_build_tmpdir: /tmp/calibre_webui
 calibre_data_dir: /data
 calibre_memory_limit: 512M
 calibre_user_uid: 112
+calibre_preferred_format: 'EPUB'

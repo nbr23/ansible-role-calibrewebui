@@ -34,6 +34,12 @@
     regexp: '^APP_SECRET_KEY = '
     line: 'APP_SECRET_KEY = "{{ calibre_flask_app_secret_key }}"'
 
+- name: Update preferred format in app config file
+  lineinfile:
+    path: '{{ calibre_container_build_tmpdir }}/calibre_webui/calibre_webui.cfg'
+    regexp: '^FORMAT_PREFERRED = '
+    line: 'FORMAT_PREFERRED = "{{ calibre_preferred_format }}"'
+
 - name: Copy static files to static folder
   copy:
     remote_src: true
