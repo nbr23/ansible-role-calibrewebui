@@ -32,7 +32,7 @@
   lineinfile:
     path: '{{ calibre_container_build_tmpdir }}/calibre_webui/calibre_webui.cfg'
     regexp: '^APP_SECRET_KEY = '
-    line: 'APP_SECRET_KEY = "{{ calibre_flask_app_secret_key }}"'
+    line: 'APP_SECRET_KEY = "{{ lookup("password", "/dev/null length=32 chars=ascii_letters")  }}"'
 
 - name: Update preferred format in app config file
   lineinfile:

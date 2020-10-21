@@ -7,7 +7,6 @@ calibre_auth_basic_file_path:
 calibre_docker_port: 8000
 calibre_static_files_path: /var/www/html/static
 calibre_static_files_url_path: /static
-calibre_flask_app_secret_key: ''
 calibre_container_build_tmpdir: /tmp/calibre_webui
 calibre_data_dir: /data
 calibre_memory_limit: 512M
