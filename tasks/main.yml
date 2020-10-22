@@ -16,34 +16,26 @@
     dest: /etc/nginx/conf.d/calibre_webui.conf
   notify: nginx_reload
 
+- name: Create local install dir
+  file:
+    path: '{{ calibre_local_install_dir }}/repo'
+    state: directory
+
+- name: Create local config from template
+  template:
+    src: calibre_webui.cfg.j2
+    dest: '{{ calibre_local_install_dir }}/calibre_webui.cfg'
+
 - name: Clone calibre_webui repository
   git:
     repo: '{{ calibre_webui_repo }}'
-    dest: '{{ calibre_container_build_tmpdir }}'
+    dest: '{{ calibre_local_install_dir }}/repo'
     force: true
-
-- name: Update static file url in app config file
-  lineinfile:
-    path: '{{ calibre_container_build_tmpdir }}/calibre_webui/calibre_webui.cfg'
-    regexp: '^STATIC_URL = '
-    line: 'STATIC_URL = "https://{{ calibre_server_name }}{{calibre_static_files_url_path}}/"'
-
-- name: Update FLASK_SECRET in app config file
-  lineinfile:
-    path: '{{ calibre_container_build_tmpdir }}/calibre_webui/calibre_webui.cfg'
-    regexp: '^APP_SECRET_KEY = '
-    line: 'APP_SECRET_KEY = "{{ lookup("password", "/dev/null length=32 chars=ascii_letters")  }}"'
-
-- name: Update preferred format in app config file
-  lineinfile:
-    path: '{{ calibre_container_build_tmpdir }}/calibre_webui/calibre_webui.cfg'
-    regexp: '^FORMAT_PREFERRED = '
-    line: 'FORMAT_PREFERRED = "{{ calibre_preferred_format }}"'
 
 - name: Copy static files to static folder
   copy:
     remote_src: true
-    src: '{{ calibre_container_build_tmpdir }}/calibre_webui/static/'
+    src: '{{ calibre_local_install_dir }}/repo/calibre_webui/static/'
     dest: '{{ calibre_static_files_path }}/'
 
 - name: Build docker container
@@ -51,7 +43,7 @@
     name: calibre_webui
     source: build
     build:
-      path: '{{ calibre_container_build_tmpdir }}'
+      path: '{{ calibre_local_install_dir }}/repo'
       pull: true
       args:
         CALIBRE_UID: '{{ calibre_user_uid }}'
@@ -68,10 +60,6 @@
       - '127.0.0.1:{{ calibre_docker_port }}:8000'
     volumes:
       - '{{ calibre_data_dir }}:/data/calibre_library'
+      - '{{ calibre_local_install_dir }}/calibre_webui.cfg:/etc/calibre_webui/calibre_webui.cfg:ro'
     tmpfs:
       - /data/tmp
-
-- name: Clean up temp dir
-  file:
-    path: '{{ calibre_container_build_tmpdir }}'
-    state: absent
