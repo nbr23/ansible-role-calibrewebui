@@ -12,3 +12,5 @@ calibre_memory_limit: 512M
 calibre_user_uid: 112
 calibre_preferred_format: 'EPUB'
 calibre_local_install_dir: /etc/calibre_webui/
+calibre_nginx_max_upload: 256M
+calibre_proxy_timeout: 600
