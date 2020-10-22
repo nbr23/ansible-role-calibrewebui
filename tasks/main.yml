@@ -38,7 +38,7 @@
     src: '{{ calibre_local_install_dir }}/repo/calibre_webui/static/'
     dest: '{{ calibre_static_files_path }}/'
 
-- name: Build docker container
+- name: Build docker image
   docker_image:
     name: calibre_webui
     source: build
