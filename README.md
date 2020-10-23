@@ -24,6 +24,8 @@ Role Variables
 - `calibre_user_uid`: UID for the calibre user in the docker container
 - `calibre_preferred_format`: output ebook format to default to when converting
 - `calibre_local_install_dir`: path to local installation directory
+- `calibre_nginx_max_upload`: nginx maximum upload file size
+- `calibre_proxy_timeout`: nginx timeout on requests to calibre_webui
 
 
 Example Playbook
