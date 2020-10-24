@@ -1,8 +1,15 @@
 ---
-- name: Ensure nginx is installed
+- name: Ensure nginx, docker, pip are installed
   package:
-    name: nginx
-    state: latest
+    name:
+      - nginx
+      - docker.io
+      - python3-pip
+    state: present
+
+- name: Ensure py-docker is installed
+  pip:
+    name: docker
 
 - name: Ensure nginx is started and enabled
   systemd:
