@@ -62,7 +62,6 @@
     image: calibre_webui
     memory: '{{ calibre_memory_limit }}'
     restart_policy: unless-stopped
-    command: /var/www/calibre_webui/run_app.sh
     ports:
       - '127.0.0.1:{{ calibre_docker_port }}:8000'
     volumes:
