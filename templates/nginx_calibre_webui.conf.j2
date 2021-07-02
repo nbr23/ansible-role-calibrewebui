@@ -4,8 +4,8 @@ server {
   server_name {{ calibre_server_name }};
 
   ssl on;
-  ssl_certificate {{ calibre_tls_cert_dir }}/{{ calibre_server_name }}/fullchain.pem;
-  ssl_certificate_key {{ calibre_tls_cert_dir }}/{{ calibre_server_name }}/privkey.pem;
+  ssl_certificate {{ calibre_tls_cert_dir }}/{{ calibre_server_name }}/fullchain.crt;
+  ssl_certificate_key {{ calibre_tls_cert_dir }}/{{ calibre_server_name }}/key.key;
 
   access_log /var/log/nginx/{{ calibre_server_name }}.access.log;
   autoindex off;
