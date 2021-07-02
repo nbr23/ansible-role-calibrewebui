@@ -38,16 +38,11 @@
     repo: '{{ calibre_webui_repo }}'
     dest: '{{ calibre_local_install_dir }}/repo'
     force: true
-
-- name: Copy static files to static folder
-  copy:
-    remote_src: true
-    src: '{{ calibre_local_install_dir }}/repo/calibre_webui/static/'
-    dest: '{{ calibre_static_files_path }}/'
+  when: calibre_webui_build
 
 - name: Build docker image
   docker_image:
-    name: calibre_webui
+    name: nbr23/calibre_webui:latest
     source: build
     build:
       path: '{{ calibre_local_install_dir }}/repo'
@@ -55,11 +50,12 @@
       args:
         CALIBRE_UID: '{{ calibre_user_uid }}'
     force_source: true
+  when: calibre_webui_build
 
 - name: Launch calibre_webui container
   docker_container:
     name: calibre_webui
-    image: calibre_webui
+    image: nbr23/calibre_webui:latest
     memory: '{{ calibre_memory_limit }}'
     restart_policy: unless-stopped
     ports:
@@ -71,3 +67,4 @@
       - target: /data/tmp
         tmpfs_mode: '0777'
         type: tmpfs
+    pull: '{{ not calibre_webui_build }}'

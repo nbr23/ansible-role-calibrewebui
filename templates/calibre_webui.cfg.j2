@@ -3,6 +3,3 @@ APP_SECRET_KEY = '{{ lookup("password", "/dev/null length=32 chars=ascii_letters
 
 # Target format to favor when converting a book
 FORMAT_PREFERRED = '{{ calibre_preferred_format }}'
-
-# Base url for static files
-STATIC_URL = 'https://{{ calibre_server_name }}{{calibre_static_files_url_path}}/'

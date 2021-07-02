@@ -27,10 +27,6 @@ server {
     uwsgi_pass localhost:{{ calibre_docker_port }};
   }
 
-  location {{ calibre_static_files_url_path }} {
-    alias {{ calibre_static_files_path }}/;
-  }
-
 {% if calibre_auth_basic %}
   location /feeds {
     auth_basic off;

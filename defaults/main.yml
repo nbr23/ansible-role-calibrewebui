@@ -1,12 +1,12 @@
 ---
 calibre_webui_repo: https://github.com/nbr23/calibre_webui.git
+calibre_webui_build: false 
+calibre_webui_docker_image: nbr23/calibre_webui:latest
 calibre_server_name: calibre.example.org
 calibre_tls_cert_dir: /srv/cert
 calibre_auth_basic: true
 calibre_auth_basic_file_path:
 calibre_docker_port: 8000
-calibre_static_files_path: /var/www/html/static
-calibre_static_files_url_path: /static
 calibre_data_dir: /data
 calibre_memory_limit: 512M
 calibre_user_uid: 112
