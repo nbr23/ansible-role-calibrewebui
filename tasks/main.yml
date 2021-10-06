@@ -62,8 +62,6 @@
     volumes:
       - '{{ calibre_data_dir }}:/data/calibre_library'
       - '{{ calibre_local_install_dir }}/calibre_webui.cfg:/etc/calibre_webui/calibre_webui.cfg:ro'
-    mounts:
-      - target: /data/tmp
-        tmpfs_mode: '0777'
-        type: tmpfs
+    tmpfs:
+      - "/data/tmp:mode=700,uid={{ calibre_user_uid }}"
     pull: '{{ not calibre_webui_build }}'
